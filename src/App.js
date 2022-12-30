@@ -1,5 +1,39 @@
-import './style.css' 
+import {useReducer} from "react"
+import DigitButton from "./DigitButton";
+import OperationButton from "./OperationButton";
+import "./style.css"
+
+export const ACTIONS ={
+  ADD_DIGIT: "add-digit",
+  CHOOSE_OPERATION: "choose-operation",
+  CLEAR: "clear",
+  DELETE_DIGIT: "delete-digit",
+  EVALUATE: "evaluate"
+}
+
+function reducer(state, {type, payload}){
+  switch(type) {
+    case ACTIONS.ADD_DIGIT:
+      if (state.overwrite) {
+        return{
+          ...state,
+          currentOperand: payload.digit,
+          overwrite: false,
+        }
+      }
+      if (payload.digit === "0" && state.currentOperand === "0") {
+        return state
+      }
+      if (payload.digit === "." && state.currentOperand.includes (".")) {
+        return state
+      }
+  }
+
+}
+
+
 function App() {
+const [state, dispatch] = useReducer(reducer, {})
   return (
     <div className='calculator-grid'>
        <div className='output'>
@@ -8,6 +42,7 @@ function App() {
        </div>
        <button className='span-two'>AC</button>
        <button>DEL</button>
+       <button>÷</button>
        <button>1</button>
        <button>2</button>
        <button>3</button>
@@ -22,7 +57,6 @@ function App() {
        <button>-</button>
        <button>.</button>
        <button>0</button>
-       <button>÷</button>
        <button className='span-two'>=</button>
 
 
