@@ -8,4 +8,3 @@ export default function OperationButton({dispatch, operation}) {
     )
 }
 
-export default OperationButton
